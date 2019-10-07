@@ -8,9 +8,9 @@ import com.ashishkaul.springboot.models.*;
 public interface ISlamBook {
 	
 	String AddPersonInfo(String data);
-	String EditPersonInfo(String data);
-	void RemovePersonInfo(String data);
-	String ViewPersonInfo(String data);
+	String EditPersonInfo(String id, String data);
+	String RemovePersonInfo(String id);
+	String ViewPersonInfo(String id);
 	List<String> ViewPersonsInfo();
 
 }

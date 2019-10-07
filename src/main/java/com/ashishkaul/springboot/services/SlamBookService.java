@@ -22,20 +22,20 @@ public class SlamBookService implements ISlamBook{
 	}
 
 	@Override
-	public String EditPersonInfo(String data) {
-		return h2RepositoryService.Update(data);
+	public String EditPersonInfo(String id, String data) {
+		return h2RepositoryService.Update(id, data);
 		
 	}
 
 	@Override
-	public void RemovePersonInfo(String data) {
-		h2RepositoryService.Delete(data);
+	public String RemovePersonInfo(String id) {
+		return h2RepositoryService.Delete(id);
 		
 	}
 
 	@Override
-	public String ViewPersonInfo(String data) {
-		return h2RepositoryService.ReadOne(data);
+	public String ViewPersonInfo(String id) {
+		return h2RepositoryService.ReadOne(id);
 		
 	}
 

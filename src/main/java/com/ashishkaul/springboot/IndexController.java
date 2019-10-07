@@ -30,8 +30,8 @@ public class IndexController {
 	}
 	
 	@GetMapping("/ViewPersons/{id}")
-	public String ViewPersonInfo(@PathVariable String data) {
-		return slamBookService.ViewPersonInfo(data);
+	public String ViewPersonInfo(@PathVariable String id) {
+		return slamBookService.ViewPersonInfo(id);
 	}
 	
 	@PostMapping("/AddPerson")
@@ -40,13 +40,13 @@ public class IndexController {
 	}
 	
 	@PutMapping("/EditPerson/{id}")
-	public String EditPersonInfo(@PathVariable String data) {
-		return slamBookService.EditPersonInfo(data);
+	public String EditPersonInfo(@PathVariable String id, @Valid @RequestBody String data) {
+		return slamBookService.EditPersonInfo(id, data);
 	}
 	
 	@DeleteMapping("/RemovePerson/{id}")
-	public void RemovePersonInfo(@PathVariable String data) {
-		slamBookService.RemovePersonInfo(data);
+	public void RemovePersonInfo(@PathVariable String id) {
+		slamBookService.RemovePersonInfo(id);
 	}
 	
 	

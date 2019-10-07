@@ -19,20 +19,23 @@ public class H2RepositoryService implements IH2Repository{
 	@Autowired
 	private Gson json;
 	@Autowired
-	private Person person;
+	private Optional<Person> person;
 	
 	@Override
 	public String Create(String data) {
-		person = json.fromJson(data, Person.class);
-		return json.toJson(personRepository.save(person));
+		person = Optional.of(json.fromJson(data, Person.class));
+		return json.toJson(personRepository.save(person.get()));
 	}
 
 	@Override
-	public String Update(String data) {
-		person = json.fromJson(data, Person.class);
-		person = GetOneRecord(person);
-		if(IsNull(person)) {
-			personRepository.save(person);
+	public String Update(String id, String data) {
+		
+		person = GetOneRecord(Long.parseLong(id));
+		
+		if(person.isPresent()) {
+			person = UpdateObject(person, json.fromJson(data, Person.class));
+			
+			personRepository.save(person.get());
 			return "Record successfully updated";
 		}else {
 			return "Record not found";
@@ -40,11 +43,12 @@ public class H2RepositoryService implements IH2Repository{
 	}
 
 	@Override
-	public String Delete(String data) {
-		person = json.fromJson(data, Person.class);
-		person = GetOneRecord(person);
-		if(IsNull(person)) {
-			personRepository.delete(person);
+	public String Delete(String id) {
+		
+		person = GetOneRecord(Long.parseLong(id));
+		
+		if(person.isPresent()) {
+			personRepository.delete(person.get());
 			return "Record successfully deleted";
 		}else {
 			return "Record not found";
@@ -53,22 +57,27 @@ public class H2RepositoryService implements IH2Repository{
 	}
 
 	@Override
-	public String ReadOne(String data) {
-		person = json.fromJson(data, Person.class);
-		return json.toJson(GetOneRecord(person));
+	public String ReadOne(String id) {
+		person = GetOneRecord(Long.parseLong(id));
+		return json.toJson(person);
 	}
 
 	@Override
 	public List<String> ReadAll() {
-		return (List<String>) json.toJsonTree(personRepository.findAll());
+		List<Person> persons = personRepository.findAll();
+		List<String> stringList = Lists
+		return (List<String>) json.toJsonTree();
 	}
 	
-	private boolean IsNull(Person person) {
-		return (person == null);
+	private Optional<Person> UpdateObject(Optional<Person> oldData, Person newData) {
+		oldData.get().setEmail(newData.getEmail());
+		oldData.get().setFirstName(newData.getFirstName());
+		oldData.get().setLastName(newData.getLastName());
+		
+		return oldData;
 	}
-	
-	private Person GetOneRecord(Person person) {
-		return personRepository.getOne(person.getId());
+	private Optional<Person> GetOneRecord(long id) {
+		return personRepository.findById(id);
 	}
 
 }
