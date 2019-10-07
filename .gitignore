@@ -2,3 +2,7 @@
 .classpath
 .gitattributes
 .project
+.settings/*
+
+#ignore directories
+.settings
