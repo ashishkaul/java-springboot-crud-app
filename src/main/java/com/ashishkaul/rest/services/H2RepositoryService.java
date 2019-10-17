@@ -1,14 +1,15 @@
-package com.ashishkaul.springboot.services;
+package com.ashishkaul.rest.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ashishkaul.springboot.interfaces.IH2Repository;
-import com.ashishkaul.springboot.models.Person;
-import com.ashishkaul.springboot.repository.PersonRepository;
+import com.ashishkaul.rest.interfaces.IH2Repository;
+import com.ashishkaul.rest.models.Person;
+import com.ashishkaul.rest.repository.PersonRepository;
 import com.google.gson.Gson;
 
 @Component
@@ -35,10 +36,9 @@ public class H2RepositoryService implements IH2Repository{
 		if(person.isPresent()) {
 			person = UpdateObject(person, json.fromJson(data, Person.class));
 			
-			personRepository.save(person.get());
-			return "Record successfully updated";
+			return json.toJson(personRepository.save(person.get()));
 		}else {
-			return "Record not found";
+			return json.toJson("Record not found");
 		}
 	}
 
@@ -49,9 +49,9 @@ public class H2RepositoryService implements IH2Repository{
 		
 		if(person.isPresent()) {
 			personRepository.delete(person.get());
-			return "Record successfully deleted";
+			return json.toJson("Record deleted successfully");
 		}else {
-			return "Record not found";
+			return json.toJson("Record not found");
 		}
 				
 	}
@@ -65,8 +65,7 @@ public class H2RepositoryService implements IH2Repository{
 	@Override
 	public List<String> ReadAll() {
 		List<Person> persons = personRepository.findAll();
-		List<String> stringList = Lists
-		return (List<String>) json.toJsonTree();
+		return ConvertToStringList(persons);
 	}
 	
 	private Optional<Person> UpdateObject(Optional<Person> oldData, Person newData) {
@@ -78,6 +77,14 @@ public class H2RepositoryService implements IH2Repository{
 	}
 	private Optional<Person> GetOneRecord(long id) {
 		return personRepository.findById(id);
+	}
+	
+	private List<String> ConvertToStringList(List<Person> persons) {
+		List<String> listOfPersonsAsString = new ArrayList<String>();
+		for(Person person : persons) {
+			listOfPersonsAsString.add(json.toJson(person));
+		}
+		return listOfPersonsAsString;
 	}
 
 }

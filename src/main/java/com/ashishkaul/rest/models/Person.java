@@ -1,4 +1,4 @@
-package com.ashishkaul.springboot.models;
+package com.ashishkaul.rest.models;
 
 //import javax.persistence.Column;
 //import javax.persistence.Entity;

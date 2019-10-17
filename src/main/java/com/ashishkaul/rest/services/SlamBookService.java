@@ -1,14 +1,11 @@
-package com.ashishkaul.springboot.services;
+package com.ashishkaul.rest.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ashishkaul.springboot.interfaces.*;
-import com.ashishkaul.springboot.models.Person;
-import com.google.gson.Gson;
+import com.ashishkaul.rest.interfaces.*;
 
 @Component
 public class SlamBookService implements ISlamBook{

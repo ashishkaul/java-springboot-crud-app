@@ -1,7 +1,6 @@
-package com.ashishkaul.springboot;
+package com.ashishkaul.rest;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -14,8 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.ashishkaul.springboot.interfaces.*;
-import com.ashishkaul.springboot.models.Person;
+import com.ashishkaul.rest.interfaces.*;
 
 @RestController
 @RequestMapping("/api/v1")
